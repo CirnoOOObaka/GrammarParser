@@ -309,9 +309,6 @@ void make_table_lr1 (int &result_indicator)
     且X＝a，(a∈VT)时，置action［Ii,a］＝Sj。若X∈VN时，则置:GOTO［Ii,X］＝j
     */
     for(int i = 0 ; i < collection_lr1.size() ; i++){
-        if(collection_lr1[i].flag==1){
-            continue;
-        }
         for (int j = 0 ; j < V_lr1.size() ; j++)
         {
             char ch = V_lr1[j];
@@ -321,21 +318,18 @@ void make_table_lr1 (int &result_indicator)
             if (!isupper(ch)){	//判断大写字母；这里就是判断是否为终结符。如果是终结符，   填入Sj
                 //action_lr1[i][ch] = Content_lr1(0, x);
                 if(x!=0){
-                    action_lr1[i][ch] = Content_lr1(0, collection_lr1[x].newseq); //这里type=0，x=j  ;s部分已经都对了
+                    action_lr1[i][ch] = Content_lr1(0, x); //这里type=0，x=j  ;s部分已经都对了
                 }
             }
             else{
                 if(x!=0){
-                    Goto_lr1[i][ch] = collection_lr1[x].newseq;	//如果是非终结符，就填入goto部分
+                    Goto_lr1[i][ch] = x;	//如果是非终结符，就填入goto部分
                 }
             }
         }
     }
     //write r and acc to_lr1 the table
     for (int i = 0 ; i < collection_lr1.size() ; i++){
-        if(collection_lr1[i].flag==1){
-            continue;
-        }
         for (int j = 0 ; j < collection_lr1[i].element.size() ; j++)	//对一个项目集的遍历
         {
             WF_lr1& tt = collection_lr1[i].element[j];
@@ -666,7 +660,7 @@ int run_lr1andslr1 (string fin_lr1_path, string fout_lr1_path)
         cout << msg << endl;
         result_indicator = 1;
     }
-    fout_lr1<<result_indicator<<endl;
+    //fout_lr1<<result_indicator<<endl;
     fin_lr1.close();
     fout_lr1.close();
     ftable_lr1.close();

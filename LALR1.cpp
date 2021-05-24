@@ -802,7 +802,7 @@ int run_lalr1 (string fin_lalr1_path, string fout_lalr1_path)
         cout << msg << endl;
         result_indicator2 = 1;
     }
-    fout_lalr1<<result_indicator2<<endl;
+    //fout_lalr1<<result_indicator2<<endl;
     fin_lalr1.close();
     fout_lalr1.close();
     ftable_lalr1.close();
