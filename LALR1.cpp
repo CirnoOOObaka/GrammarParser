@@ -895,7 +895,7 @@ int run_lalr1 (string fin_lalr1_path, string fout_lalr1_path, string input)
         make_V_lalr1();
         make_table_lalr1(result_indicator2);
         if(input == string("default"));
-        else analyse_lalr1 ("abab");
+        else analyse_lalr1 (input);
     } catch (exception) {
         result_indicator2 = 1;
     } catch (const char* msg) {
