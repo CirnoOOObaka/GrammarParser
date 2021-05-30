@@ -750,7 +750,7 @@ void clear_slr1 ()
     memset(used_slr1, 0, sizeof(used_slr1[0]));
 }
 
-int run_slr1 (string fin_slr1_path, string fout_slr1_path)
+int run_slr1 (string fin_slr1_path, string fout_slr1_path, string input)
 {
     fin_slr1.open(fin_slr1_path);
     fout_slr1.open(fout_slr1_path);
@@ -781,7 +781,8 @@ int run_slr1 (string fin_slr1_path, string fout_slr1_path)
         make_V_slr1();
         make_go_slr1();
         make_table_slr1();
-        analyse_slr1 ("(i*i)+i");
+        if(input == string("default"))analyse_slr1 ("(i*i)+i");
+        else analyse_slr1(input);
     } catch (exception) {
         result_indicator = 1;
     } catch (const char* msg) {

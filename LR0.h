@@ -13,6 +13,7 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <QString>
 #define MAX 507
 
 using namespace std;
@@ -33,6 +34,6 @@ template<class T> string get_stk_lr0(vector<T> stk);
 string get_shift_lr0(WF_lr0& temp);
 void analyse_lr0(string src);
 void clear_lr0();
-int run_lr0(string fin_lr0_path, string fout_lr0_path);
+int run_lr0(string fin_lr0_path, string fout_lr0_path,string input);
 
 #endif // LR0_H

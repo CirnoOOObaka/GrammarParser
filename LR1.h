@@ -14,6 +14,7 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <QString>
 
 #define MAX 507
 
@@ -35,6 +36,6 @@ bool _checkLR1 (const vector<int>& id, const string str);
 void make_first_lr1 ();
 void make_follow_lr1 ();
 void analyse_lr1 (string src);
-int run_lr1andslr1(string fin_lr1_path, string fout_lr1_path);
+int run_lr1andslr1(string fin_lr1_path, string fout_lr1_path, string input);
 
 #endif // LR1_H

@@ -58,7 +58,7 @@ void MainWindow::output()
 }
 
 // 文法分析函数
-int MainWindow::parse_ll1()
+int MainWindow::parse_ll1(int type)
 {
     QString input_string = input_editor->toPlainText();
 
@@ -67,14 +67,15 @@ int MainWindow::parse_ll1()
         file_in.write(input_string.toLatin1().data());
     }
     file_in.close();
-
-    int result_indicator = run_ll1("log/temp_in.txt", "log/temp_out.txt");
+    int result_indicator;
+    if(type == 0) result_indicator = run_ll1("log/temp_in.txt", "log/temp_out.txt","default");
+    else result_indicator = run_ll1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LL1 - " << result_indicator << endl;
 
     return result_indicator;
 }
 
-int MainWindow::parse_lr0()
+int MainWindow::parse_lr0(int type)
 {
     QString input_string = input_editor->toPlainText();
 
@@ -83,14 +84,15 @@ int MainWindow::parse_lr0()
         file_in.write(input_string.toLatin1().data());
     }
     file_in.close();
-
-    int result_indicator = run_lr0("log/temp_in.txt", "log/temp_out.txt");
+    int result_indicator;
+    if(type == 0) result_indicator = run_lr0("log/temp_in.txt", "log/temp_out.txt","default");
+    else result_indicator = run_lr0("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LR0 - " << result_indicator << endl;
 
     return result_indicator;
 }
 
-int MainWindow::parse_slr1()
+int MainWindow::parse_slr1(int type)
 {
     QString input_string = input_editor->toPlainText();
 
@@ -99,14 +101,15 @@ int MainWindow::parse_slr1()
         file_in.write(input_string.toLatin1().data());
     }
     file_in.close();
-
-    int result_indicator = run_slr1("log/temp_in.txt", "log/temp_out.txt");
+    int result_indicator;
+    if(type == 0) result_indicator = run_slr1("log/temp_in.txt", "log/temp_out.txt","default");
+    else result_indicator = run_slr1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "SLR1 - " << result_indicator << endl;
 
     return result_indicator;
 }
 
-int MainWindow::parse_lr1()
+int MainWindow::parse_lr1(int type)
 {
     QString input_string = input_editor->toPlainText();
 
@@ -115,14 +118,15 @@ int MainWindow::parse_lr1()
         file_in.write(input_string.toLatin1().data());
     }
     file_in.close();
-
-    int result_indicator = run_lr1andslr1("log/temp_in.txt", "log/temp_out.txt");
+    int result_indicator;
+    if(type == 0) result_indicator = run_lr1andslr1("log/temp_in.txt", "log/temp_out.txt","default");
+    else result_indicator = run_lr1andslr1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LR1 - " << result_indicator << endl;
     cout<<"test text----------------------------------------"<<endl;
     return result_indicator;
 }
 
-int MainWindow::parse_lalr1()
+int MainWindow::parse_lalr1(int type)
 {
     QString input_string = input_editor->toPlainText();
 
@@ -131,8 +135,9 @@ int MainWindow::parse_lalr1()
         file_in.write(input_string.toLatin1().data());
     }
     file_in.close();
-
-    int result_indicator = run_lalr1("log/temp_in.txt", "log/temp_out.txt");
+    int result_indicator;
+    if(type == 0) result_indicator = run_lalr1("log/temp_in.txt", "log/temp_out.txt","default");
+    else result_indicator = run_lalr1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LALR1 - " << result_indicator << endl;
     cout<<"test text----------------------------------------"<<endl;
     return result_indicator;
@@ -148,26 +153,26 @@ int MainWindow::generate_best_fit()
 
     //local_type init value: -1
     int ll1_judge = 0;
-    if(parse_ll1()==0)
+    if(parse_ll1(0)==0)
     {
         ll1_judge = 10;
     }
-    if(parse_lr0()==0)
+    if(parse_lr0(0)==0)
     {
         local_type = 1;
         return local_type+ll1_judge;
     }
-    if(parse_slr1()==0)
+    if(parse_slr1(0)==0)
     {
         local_type = 2;
         return local_type+ll1_judge;
     }
-    if(parse_lalr1()==0)
+    if(parse_lalr1(0)==0)
     {
         local_type = 3;
         return local_type+ll1_judge;
     }
-    if(parse_lr1()==0)
+    if(parse_lr1(0)==0)
     {
         local_type = 4;
         return local_type+ll1_judge;
@@ -221,31 +226,31 @@ int MainWindow::generate_best_fit()
 // 槽函数定义
 void MainWindow::on_submit_button_clicked()
 {
-    parse_ll1();
+    parse_ll1(1);
     output();
 }
 
 void MainWindow::on_submit_button_2_clicked()
 {
-    parse_lr0();
+    parse_lr0(1);
     output();
 }
 
 void MainWindow::on_submit_button_3_clicked()
 {
-    parse_slr1();
+    parse_slr1(1);
     output();
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    parse_lr1();
+    parse_lr1(1);
     output();
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    parse_lalr1();
+    parse_lalr1(1);
     output();
 
 }
@@ -299,15 +304,15 @@ void MainWindow::on_run_all_button_clicked()
 
     switch(table_index) {
 
-    case 1:     parse_lr0();                break;
-    case 2:     parse_slr1();               break;
-    case 3:     parse_lalr1();              break;
-    case 4:     parse_lr1();                break;
-    case 11:    parse_lr0();parse_ll1();    break;
-    case 12:    parse_slr1();parse_ll1();   break;
-    case 13:    parse_lalr1();parse_ll1();  break;
-    case 14:    parse_lr1();parse_ll1();    break;
-    case 0:     parse_ll1();    break;
+    case 1:     parse_lr0(0);                break;
+    case 2:     parse_slr1(0);               break;
+    case 3:     parse_lalr1(0);              break;
+    case 4:     parse_lr1(0);                break;
+    case 11:    parse_lr0(0);parse_ll1(0);    break;
+    case 12:    parse_slr1(0);parse_ll1(0);   break;
+    case 13:    parse_lalr1(0);parse_ll1(0);  break;
+    case 14:    parse_lr1(0);parse_ll1(0);    break;
+    case 0:     parse_ll1(0);    break;
     default:    ui->output_browser->setText("【不属于四类文法】");                       return;
     }
 

@@ -13,6 +13,7 @@
 #include <QFileInfo>
 #include <QDir>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -66,11 +67,11 @@ private:
     QTextBrowser* follow_set_browser;
     int local_type = -1;
 
-    int parse_ll1();
-    int parse_lr0();
-    int parse_slr1();
-    int parse_lr1();
-    int parse_lalr1();
+    int parse_ll1(int type);
+    int parse_lr0(int type);
+    int parse_slr1(int type);
+    int parse_lr1(int type);
+    int parse_lalr1(int type);
     int generate_best_fit();
     void output();
 

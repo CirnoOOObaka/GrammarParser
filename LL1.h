@@ -14,6 +14,7 @@
 #include <set>
 #include <fstream>
 #include <iomanip>
+#include <QString>
 #define MAX 507
 
 using namespace std;
@@ -30,7 +31,7 @@ void make_table_ll1();
 void print_ll1(int steps , stack<string> stk , string src , string wf , int x);
 void analyse_ll1(const string& src);
 void clear_ll1();
-int run_ll1(string fin_ll1_path, string fout_ll1_path);
+int run_ll1(string fin_ll1_path, string fout_ll1_path, string input);
 int get_first_set_ll1(string fin_ll1_path, string fout_ll1_path);
 int get_follow_set_ll1(string fin_ll1_path, string fout_ll1_path);
 

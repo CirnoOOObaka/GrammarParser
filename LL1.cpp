@@ -454,7 +454,7 @@ void clear_ll1() {
     predict_table.clear();
 }
 
-int run_ll1(string fin_ll1_path, string fout_ll1_path)
+int run_ll1(string fin_ll1_path, string fout_ll1_path,string input)
 {
     fin_ll1.open(fin_ll1_path);
     fout_ll1.open(fout_ll1_path);
@@ -487,7 +487,8 @@ int run_ll1(string fin_ll1_path, string fout_ll1_path)
         make_follow_ll1();
         make_table_ll1();
         string in = "i*i+i";
-        analyse_ll1(in);
+        if(input == string("default"))analyse_ll1(in);
+        else analyse_ll1(input);
     } catch (exception) {
         result_indicator = 1;
     } catch (const char* msg) {

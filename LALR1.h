@@ -14,6 +14,7 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <QString>
 using namespace std;
 // 产生式类
 //const int MAX=509;
@@ -43,5 +44,5 @@ bool _checkLALR1 (const vector<int>& id, const string str);
 void make_first_lalr1 ();
 void make_follow_lalr1 ();
 //void analyse_lalr1 (string src);
-int run_lalr1(string fin_lalr1_path, string fout_lalr1_path);
+int run_lalr1(string fin_lalr1_path, string fout_lalr1_path, string input);
 #endif // LALR1_H

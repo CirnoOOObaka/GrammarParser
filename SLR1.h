@@ -14,6 +14,7 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <QString>
 
 #define MAX 507
 
@@ -41,7 +42,7 @@ template<class T> string get_stk_slr1 (vector<T> stk);
 string get_shift_slr1 (WF_slr1& temp);
 void analyse_slr1 (string src);
 void clear_slr1 ();
-int run_slr1 (string fin_slr1_path, string fout_slr1_path);
+int run_slr1 (string fin_slr1_path, string fout_slr1_path,string input);
 int get_first_set_slr1 (string fin_slr1_path, string fout_slr1_path);
 int get_follow_set_slr1 (string fin_slr1_path, string fout_slr1_path);
 

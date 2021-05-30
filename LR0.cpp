@@ -556,7 +556,7 @@ void clear_lr0() {
     V_lr0.clear();
 }
 
-int run_lr0(string fin_lr0_path, string fout_lr0_path)
+int run_lr0(string fin_lr0_path, string fout_lr0_path,string input)
 {
     fin_lr0.open(fin_lr0_path);
     fout_lr0.open(fout_lr0_path);
@@ -584,7 +584,8 @@ int run_lr0(string fin_lr0_path, string fout_lr0_path)
         make_V_lr0();
         make_go_lr0();
         make_table_lr0();
-        analyse_lr0("abbcde");
+        if(input == string("default"))analyse_lr0("abbcde");
+        else analyse_lr0(input);
     } catch (exception) {
         result_indicator = 1;
     } catch (const char* msg) {

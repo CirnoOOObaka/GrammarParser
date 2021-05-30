@@ -618,8 +618,93 @@ void make_follow_lr1 ()
         fout_lr1 << "}" << endl;
     }
 }
+//----------------------------------------------------------------------------------------------------
+void print_lr1 (string s1 , string s2 , string s3 , string s4 , string s5 , string s6 , string s7)
+{
+    fout_lr1 << setw(15) << s1.c_str() << "|"
+              << setw(15) << s2.c_str() << setw(15) << s3.c_str() << setw(20) << s4.c_str() << "|"
+              << setw(15) << s5.c_str() << setw(15) << s6.c_str() << setw(15) << s7.c_str() << endl;
+}
+string get_steps_lr1 (int x)
+{
+    stringstream sin;
+    sin << x;
+    string ret;
+    sin >> ret;
+    return ret;
+}
 
-int run_lr1andslr1 (string fin_lr1_path, string fout_lr1_path)
+template<class T>
+string get_stk_lr1 (vector<T> stk)
+{
+    stringstream sin;
+    for (int i = 0 ; i < stk.size() ; i++)
+        sin << stk[i];
+    string ret;
+    sin >> ret;
+    return ret;
+}
+
+string get_shift_lr1 (WF_lr1& temp)
+{
+    stringstream sin;
+    sin << "reduce(" << temp.left << "->" << temp.right <<")";
+    string out;
+    sin >> out;
+    return out;
+}
+
+void analyse_lr1 (string src)
+{
+    fout_lr1 << "【过程分析】" << endl;
+    print_lr1 ("steps","op-stack" ,"input","operation","state-stack" , "ACTION" , "GOTO");
+    vector<char> op_stack;
+    vector<int> st_stack;
+    src+= "#";
+    op_stack.push_back ('#');
+    st_stack.push_back (0);
+    int steps = 1;
+    bool is_accepted = false;
+    for (int i = 0 ; i < src.length() ; i++)
+    {
+        char u = src[i];
+        int top = st_stack[st_stack.size()-1];
+        Content_lr1& act = action_lr1[top][u];
+        if (act.type == 0)
+        {
+            print_lr1 (get_steps_lr1 (steps++) , get_stk_lr1 (op_stack) , src.substr(i), "shift",  get_stk_lr1(st_stack) , act.out , "");
+            op_stack.push_back (u);
+            st_stack.push_back (act.num);
+        }
+        else if (act.type == 1)
+        {
+            WF_lr1& tt = wf_lr1[act.num-1];
+            int y = st_stack[st_stack.size()-tt.right.length()-1];
+            int x = Goto_lr1[y][tt.left[0]];
+            print_lr1 (get_steps_lr1 (steps++) , get_stk_lr1 (op_stack) , src.substr(i) , get_shift_lr1(tt) ,get_stk_lr1(st_stack),act.out,get_steps_lr1(x));
+            for (int j = 0 ; j < tt.right.length() ; j++)
+            {
+                st_stack.pop_back();
+                op_stack.pop_back();
+            }
+            op_stack.push_back (tt.left[0]);
+            st_stack.push_back (x);
+            i--;
+        }
+        else if (act.type == 2)
+        {
+            print_lr1 (get_steps_lr1(steps++), get_stk_lr1(op_stack) , src.substr(i) , "Accept" , get_stk_lr1(st_stack) , act.out , "");
+            is_accepted = true;
+        }
+        else continue;
+    }
+//    cout << "op_stack depth: " << op_stack.size() << endl;
+//    cout << "st_stack depth: " << st_stack.size() << endl;
+   //if (!is_accepted) throw "analyse failed!";
+    //if (steps == 1)throw "analyse failed!";
+}
+
+int run_lr1andslr1 (string fin_lr1_path, string fout_lr1_path,string input)
 {
     //freopen("1.in","r",stdin);
     fin_lr1.open(fin_lr1_path);
@@ -654,6 +739,8 @@ int run_lr1andslr1 (string fin_lr1_path, string fout_lr1_path)
         print_edge();
         make_V_lr1();
         make_table_lr1(result_indicator);
+        if(input == string("default"));
+        else analyse_lr1(input);
     } catch (exception) {
         result_indicator = 1;
     } catch (const char* msg) {
