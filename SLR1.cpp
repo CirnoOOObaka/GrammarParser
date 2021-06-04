@@ -498,7 +498,7 @@ void make_go_slr1 ()
                 if (go_slr1[i][k] == j)
                 {
                     sin.clear();
-                    sin << "I" << i << "--" <<(char)(k)<<"--I"<<j;
+                    sin << "I" << i << "->" <<(char)(k)<<"->I"<<j;
                     sin >> out;
                     fout_slr1 << out.c_str() << endl;
                 }

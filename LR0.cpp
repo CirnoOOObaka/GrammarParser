@@ -309,7 +309,7 @@ void make_go_lr0()
                 if(go_lr0[i][k] == j)
                 {
                     sin.clear();
-                    sin << "I" << i << "--" <<(char)(k)<<"--I"<<j;
+                    sin << "I" << i << "->" <<(char)(k)<<"->I"<<j;
                     sin >> out;
                     fout_lr0 << out.c_str() << endl;
                 }

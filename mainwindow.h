@@ -59,6 +59,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_testButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPlainTextEdit* input_editor;

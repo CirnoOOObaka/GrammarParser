@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "windows.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "LL1.h"
@@ -54,7 +55,7 @@ void MainWindow::output()
     }
     file_out.close();
 
-    output_browser->setText(result_string);
+    ui->output_browser->setText(result_string);
 }
 
 // 文法分析函数
@@ -122,7 +123,6 @@ int MainWindow::parse_lr1(int type)
     if(type == 0) result_indicator = run_lr1andslr1("log/temp_in.txt", "log/temp_out.txt","default");
     else result_indicator = run_lr1andslr1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LR1 - " << result_indicator << endl;
-    cout<<"test text----------------------------------------"<<endl;
     return result_indicator;
 }
 
@@ -139,7 +139,6 @@ int MainWindow::parse_lalr1(int type)
     if(type == 0) result_indicator = run_lalr1("log/temp_in.txt", "log/temp_out.txt","default");
     else result_indicator = run_lalr1("log/temp_in.txt", "log/temp_out.txt",ui->lineEdit->text().toStdString());
     cout << "LALR1 - " << result_indicator << endl;
-    cout<<"test text----------------------------------------"<<endl;
     return result_indicator;
 }
 
@@ -222,6 +221,17 @@ int MainWindow::generate_best_fit()
     }*/
     return local_type+ll1_judge/10;
 }
+//显示fa图片
+void MainWindow::on_testButton_clicked()
+{
+    WinExec("fa_py/DFApicture2.0.exe",SW_SHOWNORMAL);
+    Sleep(1000);
+    QPixmap pixmap("fa_py/output-picture.gv.png");
+    ui->label_fa->setPixmap(pixmap);
+    ui->label_fa->adjustSize();
+    //ui->label_fa->show();
+}
+
 
 // 槽函数定义
 void MainWindow::on_submit_button_clicked()
@@ -252,7 +262,6 @@ void MainWindow::on_pushButton_4_clicked()
 {
     parse_lalr1(1);
     output();
-
 }
 void MainWindow::on_show_output_button_clicked()
 {
@@ -386,6 +395,7 @@ void MainWindow::on_pushButton_clicked()
 {
     input_editor->setPlainText("7\nS'->S\nS->Aa\nS->bAc\nS->Bc\nS->bBa\nA->d\nB->d\n");
 }
+
 
 
 

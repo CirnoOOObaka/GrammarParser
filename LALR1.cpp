@@ -377,7 +377,7 @@ void print_items2(){
     //这里也不用改，只需要在输出边时，变成输出newseq就行了
     //由于相同的心经过转换函数到达的心仍然相同，所以不用：只需要输出更改为flag=1的要输出，flag=0的不用
     //printf("合并后：项目集规范族：\n");
-    fout_lalr1 << "【CLOSURE(Merged)】" << endl;
+    fout_lalr1 << "【CLOSURE】" << endl;
     for(int i=0;i<collection_lalr1.size();++i){
         if(collection_lalr1[i].flag==1){
             continue;
@@ -407,7 +407,7 @@ void print_edge2(){
             for(int x=0;x<v.size();++x){
                 goarr_lalr1.insert(make_pair(make_pair(i, v[x]),j));
                 //printf("I%d->%c->I%d\n",collection_lalr1[i].newseq,v[x],collection_lalr1[j].newseq);
-                fout_lalr1<<"I"<<collection_lalr1[i].newseq<<"->"<<v[x]<<"->I"<<j<<endl;
+                fout_lalr1<<"I"<<collection_lalr1[i].newseq<<"->"<<v[x]<<"->I"<<collection_lalr1[j].newseq<<endl;
             }
         }
     }
